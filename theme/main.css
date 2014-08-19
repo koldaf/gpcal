@@ -1,0 +1,42 @@
+.btngrp{
+	width:50%;
+	margin:auto;
+	height:100px;
+	overflow:hidden;
+}
+#result{
+	width: 95%;
+	height:150px;
+	margin:auto;
+	border-radius:5px;
+	border:none;
+}
+#result span{
+	width: 100px;
+	float:left;
+	color:#06C;
+	
+}
+#result p{
+	line-height:1em;
+	color:#F06
+}
+#wait{
+	display: none;
+}
+#err{
+	width:90%;
+	margin:auto;
+	border:none;
+	background:#F00;
+	border-radius:5px;
+	box-shadow:inset;
+	text-align:center;
+	padding:10px;
+	display:none;
+}
+.myicon{
+	width:30%;
+	height:30%;
+	float:left;
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="theme/koldaf.min.css"/>
+        <link rel="stylesheet" href="theme/main.css"/>
+		<link rel="stylesheet" href="theme/jquery.mobile.icons.min.css" />
+		<link rel="stylesheet" href="theme/jquery.mobile.structure-1.4.2.min.css" />
+		<script src="jQuery/jquery.min.js"></script>
+		<script src="jQuery/jquery.mobile-min.js"></script>
+        <script src="jQuery/jquery.validate.min.js"></script>        
+	</head>
+	<body >
+    	<!--PAGE TWO STARTS-->
+            <div data-role="page" id="page2" data-theme="c" data-add-back-btn="true" data-ajax="false">
+                <div data-role="header" data-position="fixed">
+                    <h1>My Grade Point Calculator</h1>
+                    <a href="home.html" data-icon="home">Home</a>
+                </div>
+                <div data-role="content" id="content">
+                    <span>Input Your Scores and Course Units</span>
+                    <form class="ui-field-contain ui-mini" method="get" action="http://koldaftest.6te.net/personal/index.php"
+                    		 data-transition="pop" data-ajax="false">
+                    	<fieldset id="fill">
+                         </fieldset>
+                        
+                       <div class="ui-grid-a" data-role="fieldcontain" id="cntrl">
+                            <div class="ui-block-a"> <input type="submit" value="Calculate"> </div>
+                            <div class="ui-block-b"> <input type="reset" value="Clear" data-theme="e"></div>
+                        </div>
+                  </form>
+                  <div id="wait"><img src="images/camera-loader.gif">Please Wait</div>
+                  <div id="err"> Please Check Your Connectivity</div>
+                  <div id="result">
+                  </div>                             
+                </div>
+                <div data-role="footer" data-position="fixed">
+                    <h1>&copy; 2014, Koldaf Concepts</h1>
+                </div>
+                
+        </div>
+       <script>
+	   	$("#page2").on("pageinit",function(){
+			var x = prompt("Input the number of courses you want to Calculate\n Max of 20 Courses at a time");
+			if(x > 20 || !x ){
+				alert("Maximum Number of Courses Exceeded");
+				window.location="gp.html";
+			}
+			/*else if(x)
+			{
+				alert("Please input a number");				
+			}*/
+			else{
+					
+				var y = 1;
+				while(y <= x)
+				{
+					$("#fill").append('<div class="ui-grid-a" data-role="fieldcontain">' +
+								'<div class="ui-block-a"> <input type="number" id="score'+y+'" name="score'+y+'" placeholder="Your Score" data-theme="c" max="99" min="00"> </div>'
+								+'<div class="ui-block-b ui-grid-solo"> <select id="unit'+y+'" name="unit'+y+'">' +
+										'<option value="">Select Units</option>' +
+										'<option value="1">1 Unit</option>' +
+										'<option value="2">2 Units</option>' +
+										'<option value="3">3 Units</option>' +
+										'<option value="4">4 Units</option>' +
+										'<option value="5">5 Units</option>' +
+										'<option value="6">6 Units</option>' +
+										'<option value="7">7 Units</option>' +
+									'</select>' +
+								'</div>');
+								$("#fill").refresh;				
+					y++
+				}
+			}
+		/*	$.ajaxSetup({ beforeSend: function(){
+				$('#cntrl').hide('fast'); //what happens before sending
+				$('#wait').show('fast');
+			},complete: function(){
+			},success: function(){
+			},error: function(){
+				$.('#err').fadeIn('slow');
+			}
+			})*/
+			$('form').on('submit',function(){
+					var that = $(this).serialize();
+					var url = 'http://koldaftest.6te.net/personal/index.php?max='+x+'&'+that
+					$.get(url,function(data){
+						$('#cntrl').hide('fast'); //what happens before sending
+						$('#wait').hide('fast');
+						var rep = jQuery.parseJSON(data);
+						var repHtml = '';//
+						//console.log(data);
+						
+							repHtml = 				'<p><span>Response: </span>'+
+													rep.output+'</p><p><span>Reasons:</span> '+
+													rep.reasons + '</p><p><span>Grade Point: </span>'+
+													rep.gp + '<p><p><span>Class of Degree:</span>'+
+													rep.cod +'</p>';
+													
+													//save GP
+													window.localStorage['gp'] = rep.gp;
+													//save time
+													window.localStorage['time'] = new Date();
+						
+						$('#result').html(repHtml);
+					})
+					
+				return false;
+			})
+			//alert("this is me")
+		});
+	   </script>
+	</body>
+</html>
