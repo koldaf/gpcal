@@ -13,15 +13,13 @@
 	</head>
 	<body >
     	<!--PAGE TWO STARTS-->
-            <div data-role="page" id="page2" data-theme="c" data-add-back-btn="true" data-ajax="false">
+            <div data-role="page" id="page2" data-theme="c" data-add-back-btn="true" data->
                 <div data-role="header" data-position="fixed">
                     <h1>My Grade Point Calculator</h1>
-                    <a href="home.html" data-icon="home">Home</a>
                 </div>
                 <div data-role="content" id="content">
-                    <span>Input Your Scores and Course Units</span>
-                    <form class="ui-field-contain ui-mini" method="get" action="http://koldaftest.6te.net/personal/index.php"
-                    		 data-transition="pop" data-ajax="false">
+                    <span class="teddy">Input Your Scores and Course Units</span>
+                    <form class="ui-field-contain ui-mini"  data-transition="pop" data-ajax="false">
                     	<fieldset id="fill">
                          </fieldset>
                         
@@ -43,7 +41,7 @@
        <script>
 	   	$("#page2").on("pageinit",function(){
 			var x = prompt("Input the number of courses you want to Calculate\n Max of 20 Courses at a time");
-			if(x > 20 || !x ){
+			if(x > 20 || !x || isNaN(x) ){
 				alert("Maximum Number of Courses Exceeded");
 				window.location="gp.html";
 			}
@@ -57,8 +55,8 @@
 				while(y <= x)
 				{
 					$("#fill").append('<div class="ui-grid-a" data-role="fieldcontain">' +
-								'<div class="ui-block-a"> <input type="number" id="score'+y+'" name="score'+y+'" placeholder="Your Score" data-theme="c" max="99" min="00"> </div>'
-								+'<div class="ui-block-b ui-grid-solo"> <select id="unit'+y+'" name="unit'+y+'">' +
+								'<div class="ui-block-a"> <input type="number" class="input" id="score'+y+'" name="score'+y+'" placeholder="Your Score" data-theme="c" max="99" min="00"> </div>'
+								+'<div class="ui-block-b ui-grid-solo"> <select class="input" id="unit'+y+'" name="unit'+y+'">' +
 										'<option value="">Select Units</option>' +
 										'<option value="1">1 Unit</option>' +
 										'<option value="2">2 Units</option>' +
@@ -73,16 +71,89 @@
 					y++
 				}
 			}
-		/*	$.ajaxSetup({ beforeSend: function(){
+			/*$.ajaxSetup({ beforeSend: function(){
 				$('#cntrl').hide('fast'); //what happens before sending
 				$('#wait').show('fast');
 			},complete: function(){
 			},success: function(){
 			},error: function(){
-				$.('#err').fadeIn('slow');
+				$('#err').fadeIn('slow');
 			}
 			})*/
+			function do_point(score, units){
+				if(score > 69){ var point = units * 5;}
+				else if(score > 59 && score < 70) {var point = units * 4;}
+				else if(score > 49 && score < 60) {var point = units * 3;}
+				else if(score > 44 && score < 50) {var point = units * 2;}
+				else if(score > 39 && score < 45) {var point = units * 1;}
+				else{var point = 0;} 
+				return point;
+			}
+			function cod(gp){
+			if (gp >= 4.50)
+			{
+				var d_class = "First Class";
+			}
+			else if ((gp < 4.50) && (gp >= 3.50))
+			{
+				var d_class = "Second Class Upper (2.1)";
+			}
+			else if ((gp < 3.50) && (gp >=2.40))
+			{
+				var d_class = "Second Class Lower Division (2.2)";
+			}
+			else if ((gp < 2.40) && (gp >=1.50))
+			{
+				var d_class = "Third Class";
+			}
+			else if ((gp < 1.50) && (gp >= 1.00))
+			{
+				var d_class = "Pass";
+			}
+			else
+			{
+				var d_class = "Failed";
+			}
+			return  d_class;
+		}
+		function roundToTwo(num) {    
+   		return +(Math.round(num + "e+2")  + "e-2");
+		}
 			$('form').on('submit',function(){
+				$('#wait').show('fast');
+				var totunit = 0;
+				var totpoint = 0;
+				for(sum=1;sum<=x; sum++){
+					var score = $('#score'+sum).val();
+					var units = $('#unit'+sum).val();
+					if(isNaN(score) || score > 99){
+						alert('Please input a valid Score');
+					}
+					else{
+						var point = do_point(score,units);
+						totpoint =totpoint + point;
+						totunit = totunit + parseInt(units);
+					}
+					var point = do_point(score,units);
+					totpoint =totpoint + point;
+					totunit = totunit + parseInt(units);
+				}
+				var gpa = (totpoint/totunit);
+				//console.log(roundToTwo(gpa));
+				//$('#cntrl').hide('fast'); what happens before sending
+				$('#wait').hide('fast');
+				var repHtml = '';//
+					repHtml = '<p><span>Grade Point: </span>'+
+								roundToTwo(gpa) + '</p><p><span>Class of Degree:</span>'+
+								cod(gpa) +'</p>';
+							$('#result').html(repHtml);
+				return false;
+			});
+			//alert("this is me")
+		});
+	   </script>
+	</body>
+</html><!--/*								window.localStorage['time'] = new Date();
 					var that = $(this).serialize();
 					var url = 'http://koldaftest.6te.net/personal/index.php?max='+x+'&'+that
 					$.get(url,function(data){
@@ -104,12 +175,4 @@
 													window.localStorage['time'] = new Date();
 						
 						$('#result').html(repHtml);
-					})
-					
-				return false;
-			})
-			//alert("this is me")
-		});
-	   </script>
-	</body>
-</html>
+					})*/-->
