@@ -55,8 +55,8 @@
 				while(y <= x)
 				{
 					$("#fill").append('<div class="ui-grid-a" data-role="fieldcontain">' +
-								'<div class="ui-block-a"> <input type="number" class="input" id="score'+y+'" name="score'+y+'" placeholder="Your Score" data-theme="c" max="99" min="00"> </div>'
-								+'<div class="ui-block-b ui-grid-solo"> <select class="input" id="unit'+y+'" name="unit'+y+'">' +
+								'<div class="ui-block-a"><em>'+ y +'</em><input type="number" class="input" id="score'+y+'" name="score'+y+'" placeholder="Score" data-theme="c" max="99" min="00"> </div>'
+								+'<div class="ui-block-b ui-grid-solo"> <select  id="unit'+y+'" name="unit'+y+'">' +
 										'<option value="">Select Units</option>' +
 										'<option value="1">1 Unit</option>' +
 										'<option value="2">2 Units</option>' +
@@ -66,7 +66,7 @@
 										'<option value="6">6 Units</option>' +
 										'<option value="7">7 Units</option>' +
 									'</select>' +
-								'</div>');
+								'</div></div>');
 								$("#fill").refresh;				
 					y++
 				}
