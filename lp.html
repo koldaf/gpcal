@@ -11,13 +11,30 @@
 		<script src="jQuery/jquery.mobile-min.js"></script>
         <script src="jQuery/jquery.validate.min.js"></script>       
          <script>
-		 		document.addEventListener("deviceready",function(){
-				  $('#last').html(window.localStorage['gp']);
-				  $('#last').refresh;
-				  $('#date').html(window.localStorage['time']);//+  new Date($.now()));
+		 		$(document).ready(function(){
+				  $('#gs').html(window.localStorage['sys']);
+				  $('#gp').html(window.localStorage['gp']);
+				  $('#class').html(window.localStorage['class']);
+				  $('#dat').html(window.localStorage['date']);//+  new Date($.now()));
 				//alert ('yep')
 				});
 		</script>
+        <style>
+		 h1, h2, h3, h4{
+			 margin:0px;
+			 line-height:1em
+		 }
+		 h1{
+			 font-size:120%;
+			 float: left;
+			 width:45%;
+			 text-align:left;color:#F06;
+		 }
+		 h3{
+			 font-size:100%;
+			 text-align:left;
+		 }
+		</style>
 	</head>
     <body>
     	<div data-role="page" id="page1" data-ajax="false" data-add-back-btn="true" data-theme="c">
@@ -26,34 +43,28 @@
             </div>
             <div data-role="content">
             	<div data-role="fieldcontain">
-                    <h1 align="center">YOUR LAST GRADE POINT</h1>
-                    <h3 id="last" align="center"> </h3>
+                    <h1>Grading System</h1>
+                    <h3 id="gs" align="center"> </h3>
                  </div>
                  <div data-role="fieldcontain">
-                    <h2 align="center">CALCULATED ON</h2>
-                    <h3 id="date" align="center"></h3>   
-                </div>
+                    <h1 >Grade Point</h1>
+                    <h3 id="gp" align="center"> </h3>
+                 </div>
+                 <div data-role="fieldcontain">
+                    <h1 >Class</h1>
+                    <h3 id="class" align="center"> </h3>
+                 </div>
+                 <div data-role="fieldcontain">
+                    <h1>Date</h1>
+                    <h3 id="dat" align="center"> </h3>
+                 </div>
             </div>
             <div data-role="footer" data-position="fixed">
-            	<div data-role="navbar">
+            	<!--<div data-role="navbar">
                 	<a href="#help" data-icon="info" data-iconpos="left"> Help </a>
-                </div>
+                </div>-->
             </div>
         </div>
         <!--The Help Page Starts Here-->
-        <div data-role="page" id="help" data-transition="slidedown" data-theme="c" data-add-back-btn="true">
-        	<div data-role="header">
-            	<h1>Help</h1>
-            </div>
-            <div data-role="content">
-            </div>
-            <div data-role="footer" data-position="fixed">
-            	<div data-role="navbar">
-                	<a href="home.html" data-icon="home" data-iconpos="left">Home</a>
-                    <a href="#page1" data-icon="gear" data-iconpos="left">Last GP</a>
-                    <a href="home.html" data-icon="home" data-iconpos="left">Home</a>
-                </div>
-            </div>
-        </div>
     </body>
 </html>

@@ -18,20 +18,36 @@
                     <h1>My Grade Point Calculator</h1>
                 </div>
                 <div data-role="content" id="content">
-                    <span class="teddy">Input Your Scores and Course Units</span>
-                    <form class="ui-field-contain ui-mini"  data-transition="pop" data-ajax="false">
-                    	<fieldset id="fill">
-                         </fieldset>
-                        
-                       <div class="ui-grid-a" data-role="fieldcontain" id="cntrl">
-                            <div class="ui-block-a"> <input type="submit" value="Calculate"> </div>
-                            <div class="ui-block-b"> <input type="reset" value="Clear" data-theme="e"></div>
-                        </div>
-                  </form>
-                  <div id="wait"><img src="images/camera-loader.gif">Please Wait</div>
-                  <div id="err"> Please Check Your Connectivity</div>
-                  <div id="result">
-                  </div>                             
+                	<div data-role="fieldcontain" id="tot" class="ui-mini">
+                    	<label for="num" class="ui-hidden-accessible">Input Number of Courses</label>
+                        	<input type="number" id="num" placeholder="Number of Courses" name="num"/>
+                        <label for="type" class="ui-hidden-accessible">Type of Institution</label>
+                        	<select id="inst">
+                            	<option selected value="">Select Your Institution </option>
+                                <option value="coe">College of Education</option>
+                                <option value="poly">Polytechnic</option>
+                                <option value="univ">University</option>
+                            </select>
+                        <button id="go">Continue</button>
+                    </div>
+                    <div id="cal">
+                        <span class="teddy">Input Your Scores and Course Units</span>
+                        <form class="ui-field-contain ui-mini"  data-transition="pop" data-ajax="false">
+                            <fieldset id="fill">
+                             </fieldset>
+                            
+                           <div class="ui-grid-a" data-role="fieldcontain" id="cntrl">
+                                <div class="ui-block-a"> <input type="submit" value="Calculate"> </div>
+                                <div class="ui-block-b"> <input type="reset" value="Clear" data-theme="e"></div>
+                            </div>
+                      </form>
+                      <div id="wait"><img src="images/camera-loader.gif">Please Wait</div>
+                      <div id="err"> Please Check Your Connectivity</div>
+                      <div id="result">
+                      </div>
+                      <div id="save">
+                      	<button id="savegp">Save My GP </button>
+                      </div>                             
                 </div>
                 <div data-role="footer" data-position="fixed">
                     <h1>&copy; 2014, Koldaf Concepts</h1>
@@ -40,24 +56,26 @@
         </div>
        <script>
 	   	$("#page2").on("pageinit",function(){
-			var x = prompt("Input the number of courses you want to Calculate\n Max of 20 Courses at a time");
-			if(x > 20 || !x || isNaN(x) ){
-				alert("Maximum Number of Courses Exceeded");
-				window.location="gp.html";
-			}
-			/*else if(x)
-			{
-				alert("Please input a number");				
-			}*/
+			//var x = prompt("Input the number of courses you want to Calculate\n Max of 20 Courses at a time");
+			$('#go').click(function(){
+				var x = $('#num').val();
+				var type = $('#inst').val();
+				if(x > 50 || !x || isNaN(x) ){
+					alert("Maximum Number of Courses Exceeded\n Must Not be More than 50");
+				}
+				else if( type == ""){
+					alert("Please Select Institution");
+				}
 			else{
-					
+				  $('#cal').fadeIn('slow');
+				  $('#tot').fadeOut('slow');
 				var y = 1;
 				while(y <= x)
 				{
 					$("#fill").append('<div class="ui-grid-a" data-role="fieldcontain">' +
-								'<div class="ui-block-a"><em>'+ y +'</em><input type="number" class="input" id="score'+y+'" name="score'+y+'" placeholder="Score" data-theme="c" max="99" min="00"> </div>'
-								+'<div class="ui-block-b ui-grid-solo"> <select  id="unit'+y+'" name="unit'+y+'">' +
-										'<option value="">Select Units</option>' +
+								'<div class="ui-block-a"> <span class="nos">'+ y +'</span> <input type="number" class="input" id="score'+y+'" name="score'+y+'" placeholder="Score" data-theme="c" max="99" min="00"> </div>'
+								+'<div class="ui-block-b ui-grid-solo"> <select id="unit'+y+'" name="unit'+y+'">' +
+										'<option value="">Units</option>' +
 										'<option value="1">1 Unit</option>' +
 										'<option value="2">2 Units</option>' +
 										'<option value="3">3 Units</option>' +
@@ -66,7 +84,7 @@
 										'<option value="6">6 Units</option>' +
 										'<option value="7">7 Units</option>' +
 									'</select>' +
-								'</div></div>');
+								'</div>');
 								$("#fill").refresh;				
 					y++
 				}
@@ -80,41 +98,120 @@
 				$('#err').fadeIn('slow');
 			}
 			})*/
-			function do_point(score, units){
-				if(score > 69){ var point = units * 5;}
-				else if(score > 59 && score < 70) {var point = units * 4;}
-				else if(score > 49 && score < 60) {var point = units * 3;}
-				else if(score > 44 && score < 50) {var point = units * 2;}
-				else if(score > 39 && score < 45) {var point = units * 1;}
-				else{var point = 0;} 
+			function do_point(score, units,type){
+				if(type == 'univ' || type == 'coe'){						
+					if(score > 69){ var point = units * 5;}
+					else if(score > 59 && score < 70) {var point = units * 4;}
+					else if(score > 49 && score < 60) {var point = units * 3;}
+					else if(score > 44 && score < 50) {var point = units * 2;}
+					else if(score > 39 && score < 45) {var point = units * 1;}
+					else{var point = 0;} 
+				}
+				else if (type == 'poly'){
+					if(score > 74) { var point = units * 4 ;}
+					else if (score >69 && score <75) { var point = units * 3.5}
+					else if (score >64 && score <70) { var point = units * 3.25}
+					else if (score >59 && score <65) { var point = units * 3}
+					else if (score >54 && score <60) { var point = units * 2.75}
+					else if (score >49 && score <55) { var point = units * 2.5}
+					else if (score >44 && score <50) { var point = units * 2.25}
+					else if (score >39 && score <45) { var point = units * 2}
+					else { var point = 0;}
+				}
+				else{
+					alert ("There was a very serious error");
+				}
 				return point;
 			}
-			function cod(gp){
-			if (gp >= 4.50)
-			{
-				var d_class = "First Class";
-			}
-			else if ((gp < 4.50) && (gp >= 3.50))
-			{
-				var d_class = "Second Class Upper (2.1)";
-			}
-			else if ((gp < 3.50) && (gp >=2.40))
-			{
-				var d_class = "Second Class Lower Division (2.2)";
-			}
-			else if ((gp < 2.40) && (gp >=1.50))
-			{
-				var d_class = "Third Class";
-			}
-			else if ((gp < 1.50) && (gp >= 1.00))
-			{
-				var d_class = "Pass";
-			}
-			else
-			{
-				var d_class = "Failed";
-			}
+			function cod(gp,type){
+				if(type == 'univ'){
+					if (gp >= 4.50)
+					{
+						var d_class = "First Class";
+					}
+					else if ((gp < 4.50) && (gp >= 3.50))
+					{
+						var d_class = "Second Class Upper (2.1)";
+					}
+					else if ((gp < 3.50) && (gp >=2.40))
+					{
+						var d_class = "Second Class Lower Division (2.2)";
+					}
+					else if ((gp < 2.40) && (gp >=1.50))
+					{
+						var d_class = "Third Class";
+					}
+					else if ((gp < 1.50) && (gp >= 1.00))
+					{
+						var d_class = "Pass";
+					}
+					else
+					{
+						var d_class = "Failed";
+					}
+				}
+				else if (type == 'coe')
+				{
+					if (gp >= 4.50)
+					{
+						d_class = " Distinction ";
+					}
+					else if ((gp < 4.50) && (gp >= 3.50))
+					{
+						d_class = " Credit";
+					}
+					else if ((gp < 3.50) && (gp >=2.40))
+					{
+						d_class = " Merit ";
+					}
+					else if ((gp < 2.40) && (gp >=1.50))
+					{
+						d_class = " Lower Merit ";
+					}
+					else if ((gp < 1.50) && (gp >= 1.00))
+					{
+						d_class = " Pass ";
+					}
+					else
+					{
+						d_class = " Failed ";
+					}
+				}
+				else{
+					if (gp >= 3.50)
+					{
+						d_class = " Distinction ";
+					}
+					else if ((gp < 3.49) && (gp >= 3.00))
+					{
+						d_class = " Upper Credit";
+					}
+					else if ((gp < 2.99) && (gp >=2.50))
+					{
+						d_class = " Lower Credit ";
+					}
+					else if ((gp < 2.49) && (gp >=2.00))
+					{
+						d_class = " Pass ";
+					}
+					else 
+					{
+						d_class = " Failed ";
+					}
+				}
 			return  d_class;
+		}
+		function gradsys(type){
+			if(type == 'univ'){
+				var sys = 'University Grading System (5points)';
+			}
+			else if( type == 'coe'){
+				var sys = 'College of Education Grading System';
+			}
+			else{
+				var sys = 'Polytechnic Grading System';
+			}
+			return sys;
 		}
 		function roundToTwo(num) {    
    		return +(Math.round(num + "e+2")  + "e-2");
@@ -130,49 +227,37 @@
 						alert('Please input a valid Score');
 					}
 					else{
-						var point = do_point(score,units);
+					/*	var point = do_point(score,units,type);
 						totpoint =totpoint + point;
 						totunit = totunit + parseInt(units);
-					}
-					var point = do_point(score,units);
-					totpoint =totpoint + point;
-					totunit = totunit + parseInt(units);
+					}*/
+						var point = do_point(score,units,type);
+						totpoint =totpoint + point;
+						totunit = totunit + parseInt(units);
+				}
 				}
 				var gpa = (totpoint/totunit);
 				//console.log(roundToTwo(gpa));
 				//$('#cntrl').hide('fast'); what happens before sending
 				$('#wait').hide('fast');
 				var repHtml = '';//
-					repHtml = '<p><span>Grade Point: </span>'+
-								roundToTwo(gpa) + '</p><p><span>Class of Degree:</span>'+
-								cod(gpa) +'</p>';
+					repHtml = '<p><span>Grading System </span>'+ gradsys(type) +'</p><p><span>Grade Point: </span>'+
+								roundToTwo(gpa) + '</p><p><span>Class:</span>'+
+								cod(gpa,type) +'</p>';
 							$('#result').html(repHtml);
+							$('#save').fadeIn('slow');
+				$('#savegp').click(function(){
+				window.localStorage['sys'] = gradsys(type);
+				window.localStorage['gp'] = roundToTwo(gpa);
+				window.localStorage['class'] = cod(gpa,type);
+				window.localStorage['date'] = new Date();
+				$(this).html('Saved')
+				console.log('saved');
+			})
 				return false;
 			});
-			//alert("this is me")
 		});
+		})
 	   </script>
 	</body>
-</html><!--/*								window.localStorage['time'] = new Date();
-					var that = $(this).serialize();
-					var url = 'http://koldaftest.6te.net/personal/index.php?max='+x+'&'+that
-					$.get(url,function(data){
-						$('#cntrl').hide('fast'); //what happens before sending
-						$('#wait').hide('fast');
-						var rep = jQuery.parseJSON(data);
-						var repHtml = '';//
-						//console.log(data);
-						
-							repHtml = 				'<p><span>Response: </span>'+
-													rep.output+'</p><p><span>Reasons:</span> '+
-													rep.reasons + '</p><p><span>Grade Point: </span>'+
-													rep.gp + '<p><p><span>Class of Degree:</span>'+
-													rep.cod +'</p>';
-													
-													//save GP
-													window.localStorage['gp'] = rep.gp;
-													//save time
-													window.localStorage['time'] = new Date();
-						
-						$('#result').html(repHtml);
-					})*/-->
+</html>

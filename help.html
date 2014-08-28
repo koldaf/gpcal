@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="theme/koldaf.min.css"/>
+        <link rel="stylesheet" href="theme/main.css"/>
+		<link rel="stylesheet" href="theme/jquery.mobile.icons.min.css" />
+		<link rel="stylesheet" href="theme/jquery.mobile.structure-1.4.2.min.css" />
+		<script src="jQuery/jquery.min.js"></script>
+		<script src="jQuery/jquery.mobile-min.js"></script>
+        <script src="jQuery/jquery.validate.min.js"></script>       
+         <!--<script>
+		 		document.addEventListener("deviceready",function(){
+				  $('#last').html(window.localStorage['gp']);
+				  $('#date').html(window.localStorage['time']);//+  new Date($.now()));
+				//alert ('yep')
+				});
+		</script>-->
+	</head>
+    <body>
+            <div data-role="page" id="help" data-transition="slidedown" data-theme="c" data-add-back-btn="true">
+                        <div data-role="header">
+                            <h1>Help</h1>
+                        </div>
+                        <div data-role="content">
+                        	<h1>How to Use The App</h1>
+                        	<ol>
+                            	<li>First input the number of courses you want to calculate for. 
+                                	<span style="color:#F00; ">*Maximum of 50 courses at once</span></li>
+                                <li>Select your Institution Grading System
+                                	<span style="color:#F00; ">* University, College of Education or Polytechnic</span></li>
+                                <li>Wait for about 2 seconds ( Depending on your device speed) for the APP to load the input page
+                                <li>Start inputing your SCORE and the unit of the COURSE one after the other
+                              <li>Tap the CALCULATE button after completing the field or CLEAR if you want to reset the form
+                                <li>Make Sure All the fields are completed</li>
+                            </ol>
+                            
+                        </div>
+                        <div data-role="footer" data-position="fixed">
+                            <!--<div data-role="navbar">
+                                <a href="home.html" data-icon="home" data-iconpos="left">Home</a>
+                                <a href="#page1" data-icon="gear" data-iconpos="left">Last GP</a>
+                                <a href="home.html" data-icon="home" data-iconpos="left">Home</a>
+                            </div>-->
+                        </div>
+            </div>
+     </body>
+ </html>
