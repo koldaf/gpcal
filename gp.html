@@ -9,7 +9,10 @@
 		<link rel="stylesheet" href="theme/jquery.mobile.structure-1.4.2.min.css" />
 		<script src="jQuery/jquery.min.js"></script>
 		<script src="jQuery/jquery.mobile-min.js"></script>
-        <script src="jQuery/jquery.validate.min.js"></script>        
+        <script src="jQuery/jquery.validate.min.js"></script>   
+        <style>
+			input{ color:#222;}
+		</style>     
 	</head>
 	<body >
     	<!--PAGE TWO STARTS-->
@@ -18,7 +21,7 @@
                     <h1>My Grade Point Calculator</h1>
                 </div>
                 <div data-role="content" id="content">
-                	<div data-role="fieldcontain" id="tot" class="ui-mini">
+                	<div data-role="fieldcontain" id="tot" class="ui-mini ui-content">
                     	<label for="num" class="ui-hidden-accessible">Input Number of Courses</label>
                         	<input type="number" id="num" placeholder="Number of Courses" name="num"/>
                         <label for="type" class="ui-hidden-accessible">Type of Institution</label>
@@ -237,23 +240,38 @@
 				}
 				}
 				var gpa = (totpoint/totunit);
-				//console.log(roundToTwo(gpa));
-				//$('#cntrl').hide('fast'); what happens before sending
-				$('#wait').hide('fast');
-				var repHtml = '';//
-					repHtml = '<p><span>Grading System </span>'+ gradsys(type) +'</p><p><span>Grade Point: </span>'+
-								roundToTwo(gpa) + '</p><p><span>Class:</span>'+
-								cod(gpa,type) +'</p>';
-							$('#result').html(repHtml);
-							$('#save').fadeIn('slow');
-				$('#savegp').click(function(){
-				window.localStorage['sys'] = gradsys(type);
-				window.localStorage['gp'] = roundToTwo(gpa);
-				window.localStorage['class'] = cod(gpa,type);
-				window.localStorage['date'] = new Date();
-				$(this).html('Saved')
-				console.log('saved');
-			})
+				if (isNaN(gpa))
+				{
+					$('#wait').hide('fast');
+					  var repHtml = '';//
+						  repHtml = '<p><span>Error<big>!</big> </span> There was an error computing your GP.<br> Please Complete all the forms and try again!</p>';
+								  $('#result').html(repHtml);
+								  if($('#savegp').is(':visible')){
+									  $('#savegp').fadeOut('slow');
+								  }
+				}else{
+						if($('#savegp').is(':hidden')){
+									  $('#savegp').fadeIn('slow');
+								  }
+					  //console.log(roundToTwo(gpa));
+					  //$('#cntrl').hide('fast'); what happens before sending
+					  $('#wait').hide('fast');
+					  var repHtml = '';//
+						  repHtml = '<p><span>Grading System </span>'+ gradsys(type) +'</p><p><span>Grade Point: </span>'+
+									  roundToTwo(gpa) + '</p><p><span>Class:</span>'+
+									  cod(gpa,type) +'</p>';
+								  $('#result').html(repHtml);
+								  $('#save').fadeIn('slow');
+					  $('#savegp').click(function(){
+					  window.localStorage['sys'] = gradsys(type);
+					  window.localStorage['gp'] = roundToTwo(gpa);
+					  window.localStorage['class'] = cod(gpa,type);
+					  window.localStorage['date'] = new Date();
+					  $(this).html('Saved')
+					  $('#cntrl').fadeOut('slow');
+					  console.log('saved');
+				  })
+				}
 				return false;
 			});
 		});

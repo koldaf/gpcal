@@ -71,3 +71,6 @@ select{
 #cal, #save{
 	display:none;
 }
+.ui-page {
+    -webkit-backface-visibility: hidden;
+}
